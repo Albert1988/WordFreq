@@ -1,7 +1,10 @@
 #!/usr/bin/python
-#_*_ coding: utf-8 _*_
-# Author : bingqing.xie <bingqing.xie@bluefocus.com>
-# Filename : FileSeg.py
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Nov 17 09:50:31 2015
+
+@author: bingqing.xie
+"""
 
 import sys
 import os
