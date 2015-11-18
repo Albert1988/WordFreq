@@ -17,6 +17,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Python
+*.pyc
+
 # =========================
 # Operating System Files
 # =========================
@@ -42,6 +45,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Python
-.pyc
+
 
