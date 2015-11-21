@@ -27,6 +27,8 @@ def wordfreq(corpus_path, start_index, stop_words_path, freq_path):
     for item in cc:
         if stop_words_dic.has_key(item[0]) is True:
             continue
+        if len(item[0]) < 4:
+            continue
         freqfile.write(str(item[0]) + '\t' + str(item[1]) + '\n')
     corpus.close()
     freqfile.close()

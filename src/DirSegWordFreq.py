@@ -1,15 +1,14 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 """
-Created on Tue Nov 17 09:50:31 2015
+Created on Sat Nov 21 16:24:49 2015
 
 @author: bingqing.xie
 """
 
-#%%
+import os
 import jieba
 from collections import Counter
-from SegWordFreq_config import *
+from DirSegWordFreq_config import *
 
 jieba.load_userdict(user_dict_path)
 
@@ -19,8 +18,7 @@ def term_seg(text,str_splitTag):
     seg_text = str_splitTag.join(line)
     return seg_text
        
-def file_seg(in_filename,out_filename,str_splitTag):
-    print "分词进行中"    
+def file_seg(in_filename,out_filename,str_splitTag):   
     f = open(in_filename,'r')
     fw = open(out_filename,'w')
     for line in f:
@@ -31,7 +29,6 @@ def file_seg(in_filename,out_filename,str_splitTag):
     f.close()
 
 def word_freq(corpus_path, stop_words_path, freq_path):
-    print "计算词频进行中"
     corpus = open(corpus_path, 'r')
     vocab_list = []
     for line in corpus.readlines():
@@ -52,16 +49,20 @@ def word_freq(corpus_path, stop_words_path, freq_path):
         freqfile.write(str(item[0]) + '\t' + str(item[1]) + '\n')
     corpus.close()
     freqfile.close()
+
+def dir_freq(dir, fileinfo_path, str_splitTag, stop_words_path):
+    fileinfo = open(fileinfo_path,'w')
+    for root, dirnames, filenames in os.walk(dir,topdown=True):
+        for name in filenames:
+            fileinfo.write(os.path.join(root,name) + '\n')
+            fname = os.path.join(root, name)
+            fwname = os.path.join(fname+'.seg')
+            fqname = os.path.join(fname + '.freq')
+            file_seg(fname, fwname, str_splitTag)
+            word_freq(fwname, stop_words_path, fqname)
+    fileinfo.close()
     
-
-print "分词开始"
-file_seg(in_filename,
-         out_filename,
-         str_splitTag)
-print "分词完成"
-
-print "计算词频开始"
-word_freq(corpus_path, 
-         stop_words_path,
-         freq_path)
-print "计算词频完成"
+dir_freq(dir,
+         fileinfo_path,
+         str_splitTag,
+         stop_words_path)
